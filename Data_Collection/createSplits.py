@@ -39,8 +39,8 @@ for dataset_name in tqdm(datasets):
                     'ratios': ratios,
                     'entity_to_id': entity_to_id,
                     'relation_to_id': relation_to_id,
-                    'training': training.triples.tolist(),
-                    'testing': testing.triples.tolist(),
-                    'validation': validation.triples.tolist()
+                    'training': training.mapped_triples.tolist(),
+                    'testing': testing.mapped_triples.tolist(),
+                    'validation': validation.mapped_triples.tolist()
                 }}, f)
 
