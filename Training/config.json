@@ -1,0 +1,33 @@
+{
+  "WN18": {
+    "TransE": {
+      "embedding_dim": 150,
+      "random_seed": 1996,
+      "loss": "MarginRankingLoss",
+      "loss_kwargs": {
+        "margin": 1.0,
+        "reduction": "mean"
+      },
+      "regularizer": "LpRegularizer",
+      "regularizer_kwargs": {
+        "weight": 1e-04,
+        "p": 3.0,
+        "dim": -1
+      },
+      "optimizer_name": "Adam",
+      "optimizer_kwargs": {
+        "lr": 5e-05
+      },
+      "num_epochs": 4000,
+      "batch_size": 32768,
+      "negative_sampler": "basic",
+      "negative_sampler_kwargs": {
+        "corruption_scheme": [
+          "head",
+          "tail"
+        ],
+        "num_negs_per_pos": 10
+      }
+    }
+  }
+}
