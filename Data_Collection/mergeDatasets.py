@@ -18,6 +18,8 @@ for dataset_name in tqdm(datasets):
 
     dataset_complete = pd.concat([training_pd, validation_pd, testing_pd])
 
+    # print(dataset_complete.shape, dataset_complete.drop_duplicates().shape) # Abbiamo controllato che nel fare il concat non ci siano duplicati
+
     os.makedirs('./Datasets_Complete/{}/'.format(dataset_name), exist_ok=True)
 
     dataset_complete.to_csv('./Datasets_Complete/{}/{}.csv'.format(dataset_name, dataset_name),
