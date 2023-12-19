@@ -34,7 +34,7 @@ tracker = OfflineEmissionsTracker(
     log_level='critical')
 
 tracker.start_task("import")
-from pykeen.models import ComplEx, TransE, RotatE
+from pykeen.models import ComplEx, TransE, RotatE, HolE
 from torch.optim import Adam, Adagrad
 from pykeen.training import SLCWATrainingLoop, LCWATrainingLoop
 from pykeen.training.callbacks import TrainingCallback
