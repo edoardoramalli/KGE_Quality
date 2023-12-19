@@ -9,7 +9,9 @@ import os
 
 from removeEntity import *
 
-dt = ['YAGO310']
+# dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237']
+
+dt = ['FB15k']
 
 models = ['ComplEx']
 
@@ -19,7 +21,7 @@ top = [0.01, 0.03, 0.05, 0.10]
 
 bottom = [0.05, 0.10, 0.15, 0.20]
 
-n_split = [0]
+n_split = [0, 1, 2]
 
 max_remove_top = max(top)
 max_remove_bottom = max(bottom)
@@ -49,6 +51,8 @@ def create_new_pick(_dataset_name, _c_split, _dataset, _model, _entities_to_be_r
         'min_testing': min_testing.values.tolist(),
         'property': _property_name,
         'value': _value,
+        'max_top_min_test_set': max_remove_top,
+        'max_bottom_min_test_set': max_remove_bottom,
     }
 
     return new_pick
@@ -105,6 +109,8 @@ for dataset_name in dt:
                         'min_testing': testing_df.values.tolist(),
                         'property': property_name,
                         'value': 0,
+                        'max_top_min_test_set': 0,
+                        'max_bottom_min_test_set': 0,
                     }
                     # print('qua')
                     # print(new_pick.keys())

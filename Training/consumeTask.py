@@ -84,10 +84,14 @@ with open(pickle_file, 'rb') as f:
 
 print('DATASET: {}'.format(dataset_pickle['dataset']))
 
+HP = get_hp(dataset_name=dataset_pickle['dataset'], model_name=dataset_pickle['model'])
+SETTINGS = {}
+
 training_triples_factory = TriplesFactory(
     mapped_triples=torch.tensor(np.array(dataset_pickle['training']), dtype=torch.long),
     entity_to_id=dataset_pickle['entity_to_id'],
     relation_to_id=dataset_pickle['relation_to_id'],
+    create_inverse_triples=HP['dataset_kwargs']['create_inverse_triples']
 )
 
 validation_triples_factory = TriplesFactory(
@@ -110,8 +114,7 @@ min_testing_triples_factory = TriplesFactory(
 
 load_dataset_tracker = tracker.stop_task()
 
-HP = get_hp(dataset_name=dataset_pickle['dataset'], model_name=dataset_pickle['model'])
-SETTINGS = {}
+
 
 # ---- HYPERPARAMETRS ------
 
@@ -140,7 +143,7 @@ SETTINGS = {}
 
 # ---- SETTINGS -----
 use_tqdm_batch = True
-SETTINGS['frequency_save_model'] = 500
+SETTINGS['frequency_save_model'] = int(HP['num_epochs'] / 5)
 
 if torch.cuda.is_available():
     SETTINGS['cuda'] = torch.cuda.get_device_name()
@@ -165,13 +168,20 @@ model.to(torch.device('cuda'))
 
 optimizer = eval(HP['optimizer'])(params=model.get_grad_params(), **HP['optimizer_kwargs'])
 
-training_loop = eval(HP['training_loop'])(
-    model=model,
-    triples_factory=training_triples_factory,
-    optimizer=optimizer,
-    negative_sampler=HP['negative_sampler'],
-    negative_sampler_kwargs=HP['negative_sampler_kwargs'],
-)
+if HP['training_loop'] == 'SLCWATrainingLoop':
+    training_loop = eval(HP['training_loop'])(
+        model=model,
+        triples_factory=training_triples_factory,
+        optimizer=optimizer,
+        negative_sampler=HP['negative_sampler'],
+        negative_sampler_kwargs=HP['negative_sampler_kwargs'],
+    )
+else:
+    training_loop = eval(HP['training_loop'])(
+        model=model,
+        triples_factory=training_triples_factory,
+        optimizer=optimizer,
+    )
 
 tracker.start_task("training")
 # Train like Cristiano Ronaldo
@@ -179,6 +189,7 @@ training_loop.train(
     triples_factory=training_triples_factory,
     num_epochs=HP['num_epochs'],
     batch_size=HP['batch_size'],
+    label_smoothing=HP['label_smoothing'],
     use_tqdm_batch=use_tqdm_batch,
     callbacks=Edo(frequency=SETTINGS['frequency_save_model'],
                   project_path=project_path,
@@ -186,17 +197,14 @@ training_loop.train(
 )
 training_tracker = tracker.stop_task()
 
-torch.cuda.empty_cache()
-
-evaluator = RankBasedEvaluator()
+evaluator = RankBasedEvaluator(filtered=HP['evaluator_filtered'])
 
 tracker.start_task("evaluation")
 # Evaluate
 results = evaluator.evaluate(
     model=model,
     mapped_triples=testing_triples_factory.mapped_triples,
-    # batch_size=HP['batch_size'],
-    filtered=HP['evaluator_filtered'],
+    batch_size=64,
     additional_filter_triples=[
         training_triples_factory.mapped_triples,
         validation_triples_factory.mapped_triples,
@@ -209,8 +217,7 @@ tracker.start_task("evaluation_min")
 results_min = evaluator.evaluate(
     model=model,
     mapped_triples=min_testing_triples_factory.mapped_triples,
-    # batch_size=HP['batch_size'],
-    filtered=HP['evaluator_filtered'],
+    batch_size=64,
     additional_filter_triples=[
         training_triples_factory.mapped_triples,
         validation_triples_factory.mapped_triples,

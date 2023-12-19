@@ -126,3 +126,13 @@ dmypy.json
 .idea/
 
 .DS_Store
+
+Examples/
+
+Results/
+
+Training/TODO
+
+Training/DONE
+
+Training/RUNNING

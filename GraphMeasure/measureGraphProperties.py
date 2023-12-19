@@ -1,45 +1,42 @@
-import igraph as ig
-
-from pykeen.triples import TriplesFactory
-from tqdm import tqdm
-
-import random
+from multiprocessing import Pool
+import tqdm
+import time
 import pickle
 import os
-from tqdm import tqdm
-from Data_Collection.tool import datasets
-import pandas as pd
+import tqdm
+import glob
+from measureGraph import measure_graph
+import warnings
+warnings.filterwarnings("ignore")
 
 n_split = 5
 
-directed = False
-
-for dataset_name in tqdm(datasets):
-
-    for i in range(n_split):
-        folder_path = '../Data_Collection/Datasets_Complete/{}/Split_{}/'.format(dataset_name, i)
-        os.makedirs(folder_path, exist_ok=True)
-        with open(os.path.join(folder_path, 'instance.pickle'), 'rb') as f:
-            pick = pickle.load(f)
-
-        dataset = pick['dataset']
-
-        ll = dataset['training']
-
-        df = pd.DataFrame(dataset['training'], columns=['h', 'r', 't'])
-
-        df_no_rel = df[['h', 't']]
-
-        df_no_rel = df_no_rel.drop_duplicates()
-
-        kg = ig.Graph.DataFrame(df_no_rel, directed=directed)
-
-        order = len(kg.vs)
-        size = len(kg.es)
-        transitivity_undirected = kg.transitivity_undirected()
-        connected_components_strong = kg.connected_components(mode='strong')
-        connected_components_weak = kg.connected_components(mode='weak')
-        diameter = kg.diameter(directed=directed)
+directed = True
 
 
-        exit()
+def _foo(file):
+    with open(file, 'rb') as f:
+        pick = pickle.load(f)
+
+    training = pick['training']
+
+    if 'graph_metrics' in pick:
+        return 0
+
+    props = measure_graph(dataset=training, directed=directed)
+
+    pick['graph_metrics'] = {'directed': directed, **props}
+
+    with open(file, 'wb') as f:
+        pickle.dump(pick, f)
+
+    return 0
+
+
+if __name__ == '__main__':
+    job_list = glob.glob('../Training/DONE/*RotatE*/instance.pickle') # BASTA per un solo modello dopo è tutto uguale
+
+    with Pool(25) as p:
+        r = list(tqdm.tqdm(p.imap(_foo, job_list), total=len(job_list)))
+
+

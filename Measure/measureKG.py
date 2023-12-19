@@ -14,7 +14,6 @@ for dataset_name in tqdm(datasets):
 
     for i in range(n_split):
         folder_path = '../Data_Collection/Datasets_Complete/{}/Split_{}/'.format(dataset_name, i)
-        os.makedirs(folder_path, exist_ok=True)
         with open(os.path.join(folder_path, 'instance.pickle'), 'rb') as f:
             pick = pickle.load(f)
 
@@ -26,9 +25,11 @@ for dataset_name in tqdm(datasets):
 
         df_no_rel = df[['h', 't']]
 
-        df_no_rel.drop_duplicates(inplace=True)
+        df_no_rel = df_no_rel.drop_duplicates()
 
         kg = ig.Graph.DataFrame(df_no_rel, directed=directed)
+
+        # TODO come paper futuro considerare il group by size h,t per definire il peso
 
         entities = dataset['entity_to_id'].values()
 
