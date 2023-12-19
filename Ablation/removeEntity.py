@@ -26,15 +26,15 @@ def compute_test_set_min(testing_df, sorted_desc_df, property_name, max_remove_t
     return new_testing_df
 
 
-entities = [3]
+# entities = [3]
+# # #
+# df = pd.DataFrame([{'h': 1, 'r': 2, 't': 1}, {'h': 3, 'r': 2, 't': 2},{'h': 2, 'r': 2, 't': 1}, {'h': 1, 'r': 2, 't': 2},])
+# # #
+# # #
+# # #
+# # # print()
 # #
-df = pd.DataFrame([{'h': 1, 'r': 2, 't': 1}, {'h': 3, 'r': 2, 't': 2},{'h': 2, 'r': 2, 't': 1}, {'h': 1, 'r': 2, 't': 2},])
-# #
-# #
-# #
-# # print()
-#
-print(remove_entities(df, entities).values.tolist())
+# print(remove_entities(df, entities).values.tolist())
 
 
 
