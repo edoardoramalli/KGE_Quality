@@ -11,9 +11,9 @@ from removeEntity import *
 
 # dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237']
 
-dt = ['FB15k', 'WN18']
+dt = ['FB15k']
 
-models = ['HolE']
+models = ['ComplEx']
 
 properties = ['baseline', 'degree', 'pagerank', 'harmonic_centrality', 'betweenness']
 
