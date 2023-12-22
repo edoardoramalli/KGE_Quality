@@ -118,8 +118,8 @@
       "random_seed": 1996,
       "loss": "NSSALoss",
       "optimizer_name": "Adam",
-      "optimizer_kwargs": {
-        "lr": 5e-04
+      "loss_kwargs": {
+          "margin": 1,
       },
       "regularizer_kwargs": {
         "weight": 1e-04
