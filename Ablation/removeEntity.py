@@ -1,5 +1,5 @@
 import pandas as pd
-
+import random
 
 def remove_entities(df_dataset, entities_to_be_removed):
     to_be_removed = list(set(entities_to_be_removed))
@@ -8,15 +8,29 @@ def remove_entities(df_dataset, entities_to_be_removed):
     return df_dataset[(~mask_h) & (~mask_t)]
 
 
-def compute_test_set_min(testing_df, sorted_desc_df, property_name, max_remove_top, max_remove_bottom,):
+def compute_test_set_min(testing_df, sorted_desc_df, property_name, max_remove_top, max_remove_bottom, c_seed):
+    list_entities = sorted_desc_df['entity'].to_list()
+    num_entities = len(list_entities)
+
+    n_top_to_be_removed = round(num_entities * max_remove_top)
+    n_bottom_to_be_removed = round(num_entities * max_remove_bottom)
 
     quantile_top = sorted_desc_df.quantile(1 - max_remove_top)[property_name]
     top_entities_to_be_removed = sorted_desc_df[sorted_desc_df[property_name] > quantile_top]['entity'].to_list()
 
+    random.seed(c_seed)
+    top_entities_to_be_removed = random.sample(top_entities_to_be_removed,
+                                                  min([n_top_to_be_removed, len(top_entities_to_be_removed)]))
+
+    # BOTTOM
     quantile_bottom = sorted_desc_df.quantile(max_remove_bottom)[property_name]
 
     bottom_entities_to_be_removed = sorted_desc_df[sorted_desc_df[property_name] < quantile_bottom][
         'entity'].to_list()
+
+    random.seed(c_seed)
+    bottom_entities_to_be_removed = random.sample(bottom_entities_to_be_removed,
+                                                  min([n_bottom_to_be_removed, len(bottom_entities_to_be_removed)]))
 
     entities_to_be_removed = top_entities_to_be_removed + bottom_entities_to_be_removed
     entities_to_be_removed = set(entities_to_be_removed)

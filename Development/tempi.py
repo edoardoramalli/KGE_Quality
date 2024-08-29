@@ -11,7 +11,7 @@ pipeline_result = pipeline(
     dataset='FB15k',
     model='ComplEx',
     model_kwargs={
-        'embedding_dim': 200,
+        'embedding_dim': 128,
     },
     loss='NSSALoss',  # SoftplusLoss
     loss_kwargs={
@@ -28,7 +28,7 @@ pipeline_result = pipeline(
         'num_negs_per_pos': 20,
         'corruption_scheme': ('head', 'tail')
     },
-    epochs=4000,
+    epochs=100,
     # regularizer='LpRegularizer',
     # regularizer_kwargs={
     #     "weight": 1e-04,

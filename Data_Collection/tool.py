@@ -1,6 +1,6 @@
 import torch
 
-datasets = ['WN18', 'WN18RR', 'FB15k', 'FB15k237', 'YAGO310']
+datasets = ['WN18', 'WN18RR', 'FB15k', 'FB15k237', 'YAGO310', 'Kinships']
 
 
 def perc_of(current, total) -> float:

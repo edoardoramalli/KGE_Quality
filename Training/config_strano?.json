@@ -1,5 +1,30 @@
 {
   "WN18": {
+    "SimplE":{
+      "training_loop" :"LCWATrainingLoop",
+      "dataset_kwargs" : {
+            "create_inverse_triples": true
+          },
+      "embedding_dim": 256,
+      "random_seed": 1996,
+      "model_kwargs": {
+      },
+      "loss" : "CrossEntropyLoss",
+      "loss_kwargs": {
+        "reduction": "mean"
+      },
+      "regularizer" : "NoRegularizer",
+      "regularizer_kwargs" : null,
+      "optimizer": "Adam",
+      "optimizer_kwargs" :  {
+        "lr": 0.0045332698649192945
+      },
+      "num_epochs": 500,
+      "batch_size": 4096,
+      "label_smoothing": 0.004342304112997613,
+      "negative_sampler" : null,
+      "negative_sampler_kwargs" : null
+    },
     "TransE": {
       "training_loop": "SLCWATrainingLoop",
       "dataset_kwargs": {
@@ -119,6 +144,11 @@
       "embedding_dim": 200,
       "random_seed": 1996,
       "loss": "NSSALoss",
+<<<<<<< Updated upstream
+      "optimizer_name": "Adam",
+      "loss_kwargs": {
+          "margin": 1
+=======
       "loss_kwargs": {
         "reduction": "mean",
         "margin": 1.0
@@ -126,6 +156,7 @@
       "optimizer": "Adam",
       "optimizer_kwargs": {
         "lr": 5e-04
+>>>>>>> Stashed changes
       },
       "regularizer": null,
       "regularizer_kwargs": null,
@@ -380,6 +411,540 @@
       }
     }
   },
+<<<<<<< Updated upstream
+    "WN18RR": {
+      "SimplE":{
+        "training_loop" :"LCWATrainingLoop",
+        "dataset_kwargs" : {
+              "create_inverse_triples": true
+            },
+        "embedding_dim": 256,
+        "random_seed": 1996,
+        "model_kwargs": {
+        },
+        "loss" : "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer" : "NoRegularizer",
+        "regularizer_kwargs" : null,
+        "optimizer": "Adam",
+        "optimizer_kwargs" :  {
+          "lr": 0.0045332698649192945
+        },
+        "num_epochs": 700,
+        "batch_size": 512,
+        "label_smoothing": 0.004342304112997613,
+        "negative_sampler" : null,
+        "negative_sampler_kwargs" : null
+      },
+      "TransE": {
+        "training_loop": "LCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 256,
+        "random_seed": 1996,
+        "model_kwargs": {
+          "scoring_fct_norm": 1
+        },
+        "evaluator_filtered": true,
+        "loss": "SoftplusLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "NoRegularizer",
+        "regularizer_kwargs": null,
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 0.001105,
+          "weight_decay": 0.0
+        },
+        "num_epochs": 300,
+        "batch_size": 512,
+        "label_smoothing": 0.002,
+        "negative_sampler": null,
+        "negative_sampler_kwargs": null
+      },
+      "RotatE": {
+        "training_loop": "LCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": true
+        },
+        "embedding_dim": 500,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "NSSALoss",
+        "loss_kwargs": {
+          "reduction": "mean",
+          "margin": 6,
+          "adversarial_temperature": 0.5
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 5e-05
+        },
+        "num_epochs": 100,
+        "batch_size": 512,
+        "label_smoothing": 0.0,
+        "negative_sampler": null,
+        "negative_sampler_kwargs": null
+      },
+      "ComplEx": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 200,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 0.05,
+          "p": 3.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 0.0005
+        },
+        "num_epochs": 4000,
+        "batch_size": 4096,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 20
+        }
+      }
+  },
+    "FB15k": {
+      "SimplE":{
+        "training_loop" :"LCWATrainingLoop",
+        "dataset_kwargs" : {
+              "create_inverse_triples": true
+            },
+        "embedding_dim": 200,
+        "random_seed": 1996,
+        "model_kwargs": {
+        },
+        "loss" : "bceaftersigmoid",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer" : "NoRegularizer",
+        "regularizer_kwargs" : null,
+        "optimizer": "Adam",
+        "optimizer_kwargs" :  {
+          "lr": 5e-2
+        },
+        "num_epochs": 500,
+        "batch_size": 4832,
+        "label_smoothing": 0.0,
+        "negative_sampler" : null,
+        "negative_sampler_kwargs" : null
+      },
+      "TransE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 150,
+        "random_seed": 1996,
+        "model_kwargs": {
+          "scoring_fct_norm": 1
+        },
+        "evaluator_filtered": true,
+        "loss": "PairwiseLogisticLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 3.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 5e-05
+        },
+        "num_epochs": 4000,
+        "batch_size": 4096,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 10
+        }
+      },
+      "RotatE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 1000,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "NSSALoss",
+        "loss_kwargs": {
+          "reduction": "mean",
+          "margin": 24,
+          "adversarial_temperature": 1.0
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 1e-04
+        },
+        "num_epochs": 320,
+        "batch_size": 1024,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 256
+        }
+      },
+      "ComplEx": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 200,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "BCEWithLogitsLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 0.0001,
+          "p": 3.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 0.0005
+        },
+        "num_epochs": 4000,
+        "batch_size": 4096,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 20
+        }
+      }
+  },
+    "FB15k237": {
+      "SimplE":{
+        "training_loop" :"LCWATrainingLoop",
+        "dataset_kwargs" : {
+              "create_inverse_triples": true
+            },
+        "embedding_dim": 64,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "loss" : "bceaftersigmoid",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer" : "NoRegularizer",
+        "regularizer_kwargs" : null,
+        "optimizer": "Adam",
+        "optimizer_kwargs" :  {
+          "lr": 0.01651378229338377
+        },
+        "num_epochs": 151,
+        "batch_size": 256,
+        "label_smoothing": 0.40274968639045045,
+        "negative_sampler" : null,
+        "negative_sampler_kwargs" : null
+      },
+      "TransE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 400,
+        "random_seed": 1996,
+        "model_kwargs": {
+          "scoring_fct_norm": 1
+        },
+        "evaluator_filtered": true,
+        "loss": "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 1e-04
+        },
+        "num_epochs": 4000,
+        "batch_size": 4096,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 30
+        }
+      },
+      "RotatE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 1000,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "NSSALoss",
+        "loss_kwargs": {
+          "reduction": "mean",
+          "margin": 9,
+          "adversarial_temperature": 1.0
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 5e-05
+        },
+        "num_epochs": 400,
+        "batch_size": 1024,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 256
+        }
+      },
+      "ComplEx": {
+        "training_loop": "LCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": true
+        },
+        "embedding_dim": 256,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "NoRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1.0
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 0.007525067744232913,
+          "weight_decay": 0.0
+        },
+        "num_epochs": 250,
+        "batch_size": 256,
+        "label_smoothing": 0.08094657004944494,
+        "negative_sampler": null,
+        "negative_sampler_kwargs": null
+      }
+  },
+    "YAGO310": {
+      "SimplE":{
+        "training_loop" :"LCWATrainingLoop",
+        "dataset_kwargs" : {
+              "create_inverse_triples": true
+            },
+        "embedding_dim": 256,
+        "random_seed": 1996,
+        "model_kwargs": {
+        },
+        "loss" : "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer" : "NoRegularizer",
+        "regularizer_kwargs" : null,
+        "optimizer": "Adam",
+        "optimizer_kwargs" :  {
+          "lr": 0.0045332698649192945
+        },
+        "num_epochs": 100,
+        "batch_size": 4096,
+        "label_smoothing": 0.004342304112997613,
+        "negative_sampler" : null,
+        "negative_sampler_kwargs" : null
+      },
+      "TransE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": false
+        },
+        "embedding_dim": 350,
+        "random_seed": 1996,
+        "evaluator_filtered": true,
+        "model_kwargs": {
+          "scoring_fct_norm": 1
+        },
+        "loss": "CrossEntropyLoss",
+        "loss_kwargs": {
+          "reduction": "mean"
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 1e-04
+        },
+        "num_epochs": 4000,
+        "batch_size": 8192,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 30
+        }
+      },
+      "RotatE": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": true
+        },
+        "evaluator_filtered": true,
+        "embedding_dim": 500,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "loss": "NSSALoss",
+        "loss_kwargs": {
+          "reduction": "mean",
+          "margin": 24,
+          "adversarial_temperature": 1.0
+        },
+        "regularizer": "LpRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1e-04,
+          "p": 2.0,
+          "dim": -1,
+          "normalize": false
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 2e-04
+        },
+        "num_epochs": 100,
+        "batch_size": 1024,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 400
+        }
+      },
+      "ComplEx": {
+        "training_loop": "SLCWATrainingLoop",
+        "dataset_kwargs": {
+          "create_inverse_triples": true
+        },
+        "embedding_dim": 128,
+        "random_seed": 1996,
+        "model_kwargs": {},
+        "evaluator_filtered": true,
+        "loss": "NSSALoss",
+        "loss_kwargs": {
+          "reduction": "mean",
+          "adversarial_temperature": 0.1006225350513569,
+          "margin": 13.808995641429332
+        },
+        "regularizer": "NoRegularizer",
+        "regularizer_kwargs": {
+          "weight": 1.0
+        },
+        "optimizer": "Adam",
+        "optimizer_kwargs": {
+          "lr": 0.003840883080163123,
+          "weight_decay": 0.0
+        },
+        "num_epochs": 1000,
+        "batch_size": 4096,
+        "label_smoothing": 0.0,
+        "negative_sampler": "basic",
+        "negative_sampler_kwargs": {
+          "corruption_scheme": [
+            "head",
+            "tail"
+          ],
+          "num_negs_per_pos": 32
+        }
+      }
+  }
+}
+=======
   "FB15k237": {
     "TransE": {
       "training_loop": "SLCWATrainingLoop",
@@ -783,3 +1348,4 @@
     }
   }
 }
+>>>>>>> Stashed changes

@@ -2,26 +2,32 @@ import pickle
 import pandas as pd
 import time
 import string
-# import random
+import random
 import os
 
 # random.seed(int(time.time()))
 
 from removeEntity import *
 
-# dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237']
-
-dt = ['FB15k']
+dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237', 'Kinships']
+#
+# dt = ['WN18RR']
 
 models = ['ComplEx']
 
-properties = ['baseline', 'degree', 'pagerank', 'harmonic_centrality', 'betweenness']
+# properties = ['baseline', 'degree', 'pagerank', 'harmonic_centrality', 'betweenness']
+properties = ['pagerank']
 
-top = [0.01, 0.03, 0.05, 0.10]
+# top = [0.01, 0.03, 0.05, 0.10]
+top = [0.1]
 
-bottom = [0.05, 0.10, 0.15, 0.20]
+# bottom = [0.05, 0.10, 0.15, 0.20]
+bottom = [.50]
 
-n_split = [0, 1, 2]
+
+# n_split = [0, 1, 2]
+
+n_split = [0]
 
 max_remove_top = max(top)
 max_remove_bottom = max(bottom)
@@ -48,7 +54,7 @@ def create_new_pick(_dataset_name, _c_split, _dataset, _model, _entities_to_be_r
         'training': new_training_df.values.tolist(),
         'validation': new_validation_df.values.tolist(),
         'testing': new_testing_df.values.tolist(),
-        'min_testing': min_testing.values.tolist(),
+        'min_testing': _min_testing.values.tolist() if _min_testing is not None else new_testing_df.values.tolist(),
         'property': _property_name,
         'value': _value,
         'max_top_min_test_set': max_remove_top,
@@ -112,20 +118,50 @@ for dataset_name in dt:
                         'max_top_min_test_set': 0,
                         'max_bottom_min_test_set': 0,
                     }
-                    # print('qua')
-                    # print(new_pick.keys())
                     record_task(new_pick)
+                elif property_name == 'random':
+
+                    list_entities = df_measures['entity'].to_list()
+                    num_entities = len(list_entities)
+
+                    random.seed(pick['dataset']['c_random_state'])
+                    biggest_remove_random = abs(max(set(top) | set(bottom)))
+                    n_min_to_be_removed = round(num_entities * biggest_remove_random)
+                    min_entities_to_be_removed = random.sample(list_entities, n_min_to_be_removed)
+
+                    min_testing = remove_entities(df_dataset=testing_df,
+                                                  entities_to_be_removed=min_entities_to_be_removed)
+
+                    for t in set(top) | set(bottom):
+                        random.seed(pick['dataset']['c_random_state'])
+                        t = abs(t)
+                        n_to_be_removed = round(num_entities * t)
+                        entities_to_be_removed = random.sample(list_entities, n_to_be_removed)
+
+                        new_pick = create_new_pick(dataset_name, c_split, dataset, model, entities_to_be_removed,
+                                                   training_df,
+                                                   validation_df, testing_df, property_name, t, min_testing)
+
+                        record_task(new_pick)
                 else:
 
                     sorted_desc_df = df_measures.sort_values(property_name, ascending=False)
 
                     min_testing = compute_test_set_min(testing_df, sorted_desc_df, property_name, max_remove_top,
-                                                       max_remove_bottom)
+                                                       max_remove_bottom, pick['dataset']['c_random_state'])
 
                     for t in top:
+                        random.seed(pick['dataset']['c_random_state'])
+                        list_entities = df_measures['entity'].to_list()
+                        num_entities = len(list_entities)
+                        n_top_to_be_removed = round(num_entities * t)
+
                         quantile_top = sorted_desc_df.quantile(1 - t)[property_name]
                         top_entities_to_be_removed = sorted_desc_df[sorted_desc_df[property_name] >= quantile_top][
                             'entity'].to_list()
+
+                        top_entities_to_be_removed = random.sample(top_entities_to_be_removed, min([n_top_to_be_removed,
+                                                                                                    len(top_entities_to_be_removed)]))
 
                         new_pick = create_new_pick(dataset_name, c_split, dataset, model, top_entities_to_be_removed,
                                                    training_df,
@@ -134,9 +170,17 @@ for dataset_name in dt:
                         record_task(new_pick)
 
                     for b in bottom:
+                        random.seed(pick['dataset']['c_random_state'])
+                        list_entities = df_measures['entity'].to_list()
+                        num_entities = len(list_entities)
+                        n_bottom_to_be_removed = round(num_entities * b)
                         quantile_bottom = sorted_desc_df.quantile(b)[property_name]
                         bottom_entities_to_be_removed = \
                             sorted_desc_df[sorted_desc_df[property_name] <= quantile_bottom]['entity'].to_list()
+
+                        bottom_entities_to_be_removed = random.sample(bottom_entities_to_be_removed,
+                                                                      min([n_bottom_to_be_removed,
+                                                                           len(bottom_entities_to_be_removed)]))
 
                         new_pick = create_new_pick(dataset_name, c_split, dataset, model, bottom_entities_to_be_removed,
                                                    training_df,

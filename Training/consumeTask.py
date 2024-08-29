@@ -35,7 +35,7 @@ tracker = OfflineEmissionsTracker(
 
 tracker.start_task("import")
 from pykeen.models import ComplEx, TransE, RotatE, HolE
-from torch.optim import Adam, Adagrad
+from torch.optim import Adam, Adagrad, Adadelta
 from pykeen.training import SLCWATrainingLoop, LCWATrainingLoop
 from pykeen.training.callbacks import TrainingCallback
 from pykeen.evaluation import RankBasedEvaluator
@@ -114,8 +114,6 @@ min_testing_triples_factory = TriplesFactory(
 
 load_dataset_tracker = tracker.stop_task()
 
-
-
 # ---- HYPERPARAMETRS ------
 
 # KGEM
@@ -152,17 +150,21 @@ else:
 
 SETTINGS['platform'] = platform.processor()
 
+local_model_kwargs = {
+    'triples_factory': training_triples_factory,
+    'embedding_dim': HP['embedding_dim'],
+    'loss': HP['loss'],
+    'loss_kwargs': HP['loss_kwargs'],
+    'random_seed': HP['random_seed'],
+    **HP['model_kwargs']
+}
+
+if HP['regularizer'] is not None:
+    local_model_kwargs['regularizer'] = HP['regularizer']
+    local_model_kwargs['regularizer_kwargs'] = HP['regularizer_kwargs']
 
 # Pick a model
-model = eval(HP['model'])(
-    triples_factory=training_triples_factory,
-    embedding_dim=HP['embedding_dim'],
-    loss=HP['loss'],
-    loss_kwargs=HP['loss_kwargs'],
-    random_seed=HP['random_seed'],
-    regularizer=HP['regularizer'],
-    regularizer_kwargs=HP['regularizer_kwargs'],
-    **HP['model_kwargs'])
+model = eval(HP['model'])(**local_model_kwargs)
 
 model.to(torch.device('cuda'))
 

@@ -1,6 +1,9 @@
 #!/bin/bash
-#SBATCH -A IscrC_XAI
-#SBATCH -p dgx_usr_preempt
+##SBATCH -A IscrC_XAI
+##SBATCH -p dgx_usr_preempt boost_usr_prod
+
+#SBATCH -A IscrC_KGE-XAI
+#SBATCH -p boost_usr_prod
 #SBATCH --time 07:50:00     # format: HH:MM:SS
 #SBATCH -N 1                # 1 node
 #SBATCH --ntasks-per-node=1 # 1 tasks
@@ -8,4 +11,6 @@
 #SBATCH --mem=64000         # memory per node out of 980000 MB
 #SBATCH --output=JOB.%j.out_slurm
 
-cd /dgx_scratch/userexternal/eramalli/KGE_Quality/Training && /dgx/home/userexternal/eramalli/miniconda3/envs/kge/bin/python /dgx_scratch/userexternal/eramalli/KGE_Quality/Training/consumeTask.py
+cd /leonardo_scratch/fast/IscrC_KGE-XAI/KGE_Quality/Training && /leonardo/home/userexternal/eramalli/miniconda3/envs/kge/bin/python /leonardo_scratch/fast/IscrC_KGE-XAI/KGE_Quality/Training/consumeTask.py
+
+## cd /dgx_scratch/userexternal/eramalli/KGE_Quality/Training && /leonardo/home/userexternal/eramalli/miniconda3/envs/kge/bin/python /dgx/userexternal/eramalli/KGE_Quality/Training/consumeTask.py

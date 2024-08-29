@@ -4,8 +4,8 @@ import json
 
 # Codice per riprodurre la baseline con i dataset originali
 
-dataset_name = 'FB15k'
-model_name = 'ComplEx'
+dataset_name = 'WN18RR'
+model_name = 'HolE'
 
 print("BASELINE:", dataset_name, model_name)
 
@@ -38,6 +38,8 @@ pipeline_result = pipeline(
     regularizer_kwargs=HP['regularizer_kwargs'],
 )
 
+
+
 with open('./Baseline/{}_{}.json'.format(dataset_name, model_name), 'w') as f:
     json.dump(
         {'HP': HP,
@@ -47,4 +49,6 @@ with open('./Baseline/{}_{}.json'.format(dataset_name, model_name), 'w') as f:
         f,
         indent=4
     )
+
+print('H@10: {}'.format(pipeline_result.metric_results.to_dict()['both']['realistic']['hits_at_10']))
 
