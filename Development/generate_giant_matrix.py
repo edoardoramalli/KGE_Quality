@@ -42,26 +42,21 @@ def create_df(file_names):
         tmp['results_min_arithmetic_mean_rank'] = d['results_min']['both']['realistic']['arithmetic_mean_rank']
         tmp['results_min_inverse_harmonic_mean_rank'] = d['results_min']['both']['realistic']['inverse_harmonic_mean_rank']
 
-
-        # tmp['training_gpu_power'] = d['trackers']['training_tracker']['gpu_power']
         tmp['training_cpu_energy'] = d['trackers']['training_tracker']['cpu_energy']
         tmp['training_gpu_energy'] = d['trackers']['training_tracker']['gpu_energy']
         tmp['training_ram_energy'] = d['trackers']['training_tracker']['ram_energy']
         tmp['training_duration'] = d['trackers']['training_tracker']['duration']
 
-        # tmp['prediction_gpu_power'] = d['trackers']['prediction_tracker']['gpu_power']
         tmp['prediction_cpu_energy'] = d['trackers']['training_tracker']['cpu_energy']
         tmp['prediction_gpu_energy'] = d['trackers']['training_tracker']['gpu_energy']
         tmp['prediction_ram_energy'] = d['trackers']['training_tracker']['ram_energy']
         tmp['prediction_duration'] = d['trackers']['prediction_tracker']['duration']
 
-        # tmp['evaluation_gpu_power'] = d['trackers']['evaluation_tracker']['gpu_power']
         tmp['evaluation_cpu_energy'] = d['trackers']['training_tracker']['cpu_energy']
         tmp['evaluation_gpu_energy'] = d['trackers']['training_tracker']['gpu_energy']
         tmp['evaluation_ram_energy'] = d['trackers']['training_tracker']['ram_energy']
         tmp['evaluation_duration'] = d['trackers']['evaluation_tracker']['duration']
 
-        # tmp['evaluation_min_gpu_power'] = d['trackers']['evaluation_min_tracker']['gpu_power']
         tmp['evaluation_min_cpu_energy'] = d['trackers']['training_tracker']['cpu_energy']
         tmp['evaluation_min_gpu_energy'] = d['trackers']['training_tracker']['gpu_energy']
         tmp['evaluation_min_ram_energy'] = d['trackers']['training_tracker']['ram_energy']
@@ -82,15 +77,8 @@ fnames_complex = glob.glob('/home/ramalli/results/ComplEx/**/**/instance.pickle'
 fnames_rotate = glob.glob('/home/ramalli/results/RotatE/**/**/instance.pickle')
 
 
-# names = glob.glob('/Users/edoardo/Desktop/instance.pickle') # For dev
 names = glob.glob('/home/ramalli/tmp_results/**/instance.pickle')
 
-# df = create_df(fnames_transe + fnames_complex + fnames_rotate)
 df = create_df(names) # For dev
 
-# df = create_df(fnames_transe)
-
 df.to_csv('giant_matrix_2024_04_09.csv', index=False)
-
-
-# print(df.head())
