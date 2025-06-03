@@ -9,20 +9,23 @@ import os
 
 from removeEntity import *
 
-dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237', 'Kinships']
+# dt = ['YAGO310', 'WN18', 'WN18RR', 'FB15k', 'FB15k237', 'Kinships']
 #
 # dt = ['WN18RR']
 
-models = ['ComplEx']
+dt = ['YAGO310', 'WN18', 'FB15k']
+
+
+models = ['RotatE', 'TransE']
 
 # properties = ['baseline', 'degree', 'pagerank', 'harmonic_centrality', 'betweenness']
-properties = ['pagerank']
+properties = ['random']
 
 # top = [0.01, 0.03, 0.05, 0.10]
-top = [0.1]
+top = [0]
 
-# bottom = [0.05, 0.10, 0.15, 0.20]
-bottom = [.50]
+bottom = [0.01, 0.03, 0.05, 0.10, 0.15, 0.20]
+# bottom = [.50]
 
 
 # n_split = [0, 1, 2]

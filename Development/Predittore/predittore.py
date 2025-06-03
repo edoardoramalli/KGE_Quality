@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('../giant_matrix_2024_02_11.csv')
+df = pd.read_csv('../../Results/giant_matrix_2024_02_11.csv')
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import LeaveOneGroupOut

@@ -37,6 +37,8 @@ model considered in the study.
 
 ### `Training`
 The script `consumeTask.py` consume a task, i.e., take as input an ablated dataset and a KGE model and train it, recording
-the energy consumption. The hyperparameters are stored in `config.json`, including the training random seed.
+the energy consumption. The hyperparameters are stored in `config.json`, including the training random seed. The task also
+measure and store the prediction performances.
 
 ### `Results`
+It contains the condensed results.
