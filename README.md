@@ -31,13 +31,12 @@ The folder `Datasets_Complete` contains the full datasets and the splits used fo
 The script `measureKG.py` computes the entities centrality metrics.
 
 ### `Ablation`
-
-
-
-
-
+The script `createTask.py` creates the ablated version of each dataset/split according to a certain criteria (quantity and
+selection of entities). Each ablated dataset will be provide as input (a.k.a. a task) as training/test set to each KGE
+model considered in the study.
 
 ### `Training`
-
+The script `consumeTask.py` consume a task, i.e., take as input an ablated dataset and a KGE model and train it, recording
+the energy consumption. The hyperparameters are stored in `config.json`, including the training random seed.
 
 ### `Results`
