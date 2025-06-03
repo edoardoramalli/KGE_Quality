@@ -27,11 +27,14 @@ The main scripts are:
 
 The folder `Datasets_Complete` contains the full datasets and the splits used for this work.
 
+### `Measure`
+The script `measureKG.py` computes the entities centrality metrics.
+
 ### `Ablation`
 
 
 
-### `Measure`
+
 
 
 ### `Training`
