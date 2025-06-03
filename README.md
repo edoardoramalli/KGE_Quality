@@ -20,11 +20,15 @@ Knowledge Graphs" authored by E. Ramalli, C.A. Bono, C. Sancricca, C. Cappiello,
 
 ```
 ### `Data_Collection` 
-Routine to download datasets and then split them five times in training, test and validation set.
+The main scripts are:
+- `downloadDatasets.py` routine downloads datasets pre-divided in training, test and validation test.
+- `margeDatasets.py` merges the pre-defined training, test and validation splits into a single dataset.
+- `createSplits.py` splits the datasets 5 times in training, test and validation set, according to a random seed.
 
 The folder `Datasets_Complete` contains the full datasets and the splits used for this work.
 
 ### `Ablation`
+
 
 
 ### `Measure`
